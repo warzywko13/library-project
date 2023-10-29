@@ -3,6 +3,7 @@
 ## Technologie
 - Backend: Laravel
 - Frontend: HTML i JQuery
+- Baza danych: MySQL
 
 ## Funkcjonalność systemu po stronie klienta
 - Możliwość rezerwowania książek: odbiór w najbliższej lokalizacji
