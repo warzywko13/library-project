@@ -2,7 +2,7 @@
 
 ## Technologie
 - Backend: Laravel
-- Frontend: HTML i JQuery
+- Frontend: Bootstrap i JQuery
 - Baza danych: MySQL
 
 ## Funkcjonalność systemu po stronie klienta
@@ -15,7 +15,7 @@
 ## Funkcjonalność systemu po stronie pracownika
 
 - System zarządzania systemem biblioteki: dodawanie, edytowanie, usuwanie
-- System logowania użytkownika
+- System logowania pracownika
 
 ## Harmonogram pracy
 
