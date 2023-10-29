@@ -15,9 +15,9 @@
 ## Funkcjonalność systemu po stronie pracownika
 
 - System zarządzania systemem biblioteki: dodawanie, edytowanie, usuwanie
-- system logowania użytkownika
+- System logowania użytkownika
 
 ## Harmonogram pracy
 
-2023-11-18 -> Budowa strony wizualnej aplikacji
-2023-11-19 -> Backend wraz z bazą danych
+- 2023-11-18 -> Budowa strony wizualnej aplikacji
+- 2023-11-19 -> Backend wraz z bazą danych
