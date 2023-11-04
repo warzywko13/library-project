@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\AdminBooksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/', [BooksController::class, 'showBooks'])->middleware('auth');
+
+Route::prefix('admin')->group(function () {
+    Route::controller(AdminBooksController::class)->group(function () {
+       Route::get('/', 'showBooks' );
+       Route::get('/addedit/{id}', 'addedit');
+       Route::post('/addedit', 'addedit');
+    });
 })->middleware('auth');
 
 Auth::routes();

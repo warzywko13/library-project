@@ -28,7 +28,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/" class="nav-link">
                                 {{ __('Start') }}
                             </a>
                         </li>
@@ -36,6 +36,12 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 {{ __('My reservations') }}
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/admin" class="nav-link">
+                                {{ __('Admin panel') }}
                             </a>
                         </li>
                     </ul>
