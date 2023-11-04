@@ -23,6 +23,11 @@ class AdminBooksController extends Controller
     {
         $params = (object) $request->all();
 
+        if($request->session()->token() != csrf_token()) {
+            return redirect('/');
+            die;
+        }
+
         if(isset($params->id)) {
             return redirect('/' . $this->prefix);
             die;

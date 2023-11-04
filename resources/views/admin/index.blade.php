@@ -3,9 +3,10 @@
 @section('content')
     <div class="container">
         <div class="float-end mb-3">
-            <a href="/admin/addedit">
-                <button type="button" class="btn btn-outline-primary">{{__('Dodaj Nowy')}}</button>
-            </a>
+            <form method="POST" action="/admin/addedit">
+                @csrf
+                <button type="submit" class="btn btn-outline-primary">{{__('Dodaj Nowy')}}</button>
+            </form>
         </div>
 
         @if($books)
