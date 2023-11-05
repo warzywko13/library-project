@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 d-flex flex-wrap gap-4">
             @if($books)
                 @foreach($books as $book)
                     <div class="card" style="width: 18rem;">
@@ -16,7 +16,7 @@
                     </div>
                 @endforeach
             @else
-                <div>Brak książek :/</div>
+                <div>{{ __('Brak książęk :/') }}</div>
             @endif
         </div>
     </div>

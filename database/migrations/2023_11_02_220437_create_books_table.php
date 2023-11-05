@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->reqired()->unique();
             $table->string('description')->nullable();
             $table->integer('count')->default(0);
+            $table->integer('image_id')->nullable();
             $table->boolean('deleted')->default(false);
             $table->timestamp('deleted_at')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

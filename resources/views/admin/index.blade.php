@@ -2,10 +2,18 @@
 
 @section('content')
     <div class="container">
+        @if( session('message') )
+            <div>
+                <div class="alert alert-success" role="alert">
+                    {{ session('message') }}
+                </div>
+            </div>
+        @endif
+
         <div class="float-end mb-3">
             <form method="POST" action="/admin/addedit">
                 @csrf
-                <button type="submit" class="btn btn-outline-primary">{{__('Dodaj Nowy')}}</button>
+                <button type="submit" class="btn btn-outline-primary">{{ __('Dodaj Nowy') }}</button>
             </form>
         </div>
 
