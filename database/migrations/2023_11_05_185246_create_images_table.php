@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->binary('data');
+            $table->boolean('delete')->default(0);
             $table->timestamps();
         });
     }

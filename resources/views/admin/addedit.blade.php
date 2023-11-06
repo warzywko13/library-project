@@ -19,7 +19,7 @@
 
             <div class="form-group mt-2">
                 <label for="count">{{__('Ilość')}}</label>
-                <input required type="number" class="form-control" id="count" name="count" value="{{ $book['count'] }}" />
+                <input required type="number" class="form-control" id="count" name="count" value="{{ $book['count'] ?? 1 }}" />
                 @isset($error['count'])
                     <p class="text-danger fw-bold">{{ $error['count'] }}</p>
                 @endisset
@@ -35,7 +35,7 @@
 
             <div class="form-group mt-2">
                 <label class="custom-file-label" for="image"> {{ __('Zdjęcie') }} </label>
-                <div id="image"">
+                <div id="image">
                     @isset($book['data_image'])
                         <img class="mb-3" style="width: 15rem; height: 15rem;" src="data:image/jpeg;base64,{{$book['data_image']}}" />
                     @endisset

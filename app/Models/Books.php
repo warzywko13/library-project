@@ -29,9 +29,15 @@ class Books extends Model
     final public function addUpdateBook(array $ob): bool|int
     {
         if(isset($ob['id'])) {
-            //update
-            $ob['updated_at'] = new DateTime();
-            $ob['updated_by'] = auth()->user()->id;
+            if(isset($ob['deleted'])) {
+                //delete
+                $ob['deleted_at'] = new DateTime();
+                $ob['deleted_by'] = auth()->user()->id;
+            } else {
+                //update
+                $ob['updated_at'] = new DateTime();
+                $ob['updated_by'] = auth()->user()->id;
+            }
 
             return DB::table('books')
                 ->where('id', $ob['id'])

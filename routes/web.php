@@ -23,6 +23,7 @@ Route::prefix('admin')->group(function () {
        Route::get('/', 'showBooks' );
        Route::get('/addedit/{id}', 'addedit');
        Route::post('/addedit', 'addedit');
+       Route::post('/delete', 'deleteBook');
     });
 })->middleware('auth');
 

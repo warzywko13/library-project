@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Books;
 use App\Models\Images;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class AdminBooksController extends Controller
@@ -95,5 +96,21 @@ class AdminBooksController extends Controller
         }
 
         return view($this->prefix . '/addedit', ['book' => $book, 'error' => $error]);
+    }
+
+    final public function deleteBook(Request $request)
+    {
+        $id = $request->input('id');
+
+        if($id) {
+            $book = $this->model->getBookById($id);
+            $book['deleted'] = 1;
+
+            $result = $this->model->addUpdateBook($book);
+        }
+
+        $message['message'] = __('Usunięto pomyślnie');
+
+        return redirect('/' . $this->prefix)->with($message);
     }
 }
