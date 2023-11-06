@@ -11,7 +11,7 @@
                             <img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 180px; width: 100%; display: block;" @isset($book->image) src="data:image/jpeg;base64,{{ $book->image }}" @endisset data-holder-rendered="true">
                             <h5 class="card-title pt-4">{{ $book->name }}</h5>
                             <p class="card-text">Ilość: {{ $book->count }}</p>
-                            <a href="/book/view/{{ $book->id }}" class="btn btn-primary">Czytaj więcej</a>
+                            <a href="/book/{{ $book->id }}" class="btn btn-outline-primary">{{ __('Więcej') }}</a>
                         </div>
                     </div>
                 @endforeach

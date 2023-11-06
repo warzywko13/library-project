@@ -10,23 +10,27 @@ class BooksController extends Controller
 {
     public function __construct(
         private $model = new Books(),
-        private $image = new Images(),
+        private $prefix = 'book'
     )
     {}
 
     final public function showBooks()
     {
         $results = $this->model->getBooks();
+        $books = $this->getImageForArray($results);
 
-        $books = [];
-        foreach($results as $result) {
-            if(!empty($result->image_id)) {
-                $result->image = $this->image->getImage($result->image_id);
-            }
+        return view('home', ['books' => $books]);
+    }
 
-            $books[] = $result;
+    final public function showBook(Request $request, int $id = null)
+    {
+        if($id) {
+            $result = $this->model->getBookById($id);
+            $book = $this->getImageForObject($result);
+
+            return view('view', ['book' => $book]);
         }
 
-        return view('home', ['books' => $books ]);
+        return redirect('/');
     }
 }
