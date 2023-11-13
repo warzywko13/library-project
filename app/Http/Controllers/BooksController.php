@@ -31,6 +31,24 @@ class BooksController extends Controller
             return view('view', ['book' => $book]);
         }
 
+
         return redirect('/');
+    }
+
+    final public function addBookReservation(Request $request)
+    {
+        $params = $request->all();
+        $user_id = $request->user()->id;
+
+        // Czy książka ma wolne rezerwacje
+        $isFree = $this->model->getBookReservation($user_id, $params);
+        if($isFree) {
+
+        }
+        // 
+
+
+
+        dd($params);
     }
 }

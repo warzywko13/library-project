@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\AdminBooksController;
 use App\Http\Controllers\ReservationsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,11 +33,12 @@ Route::get('/', [BooksController::class, 'showBooks'])->middleware('auth');
 
 Route::controller(BooksController::class)->group(function () {
     Route::get('/book/{id}', 'showBook');
+    Route::post('/book/reserve', 'addBookReservation');
 })->middleware('auth');
 
-//Reservation
-Route::controller(ReservationsController::class)->group(function () {
-    Route::post('/book/reserve', 'addReservation');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/settings', 'showSettings');
+    Route::post('/settings', 'showSettings');
 })->middleware('auth');
 
 Auth::routes();

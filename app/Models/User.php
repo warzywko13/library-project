@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,4 +43,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    final public function getUser($user_id)
+    {
+        $result = DB::table('users')
+        ->where('id', $user_id)
+        ->first();
+
+        return $result;
+    }
+
+    final public function updateUser($params)
+    {
+        $id = $params['id'];
+
+        return DB::table('users')->where('id', $id)->update($params);
+    }
 }

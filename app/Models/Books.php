@@ -13,6 +13,8 @@ class Books extends Model
 
     final public function getBooks()
     {
+        // $sql = ""
+
         return DB::table('books')
             ->where('deleted', '0')
             ->get();
@@ -58,5 +60,31 @@ class Books extends Model
             ->where('name', $name)
             ->where('id', '<>', $id)
             ->count();
+    }
+
+    final public function getBookReservation(int $user_id, array $params)
+    {
+        $from = $params['from'];
+        $to = $params['to'];
+
+        $result = DB::table('books as b')
+                    ->leftJoin(DB::raw('(SELECT 
+                                            r.book_id,
+                                            COUNT(r.id) AS count 
+                                        FROM reservation r
+                                        WHERE 
+                                            user_id <> ? AND 
+                                            (
+                                                ? BETWEEN r.from AND r.to
+                                                OR
+                                                ? BETWEEN r.from AND r.to
+                                            )
+                                            AND r.deleted = 0
+                                        GROUP BY r.book_id) as rr'), [$user_id, $from, $to])
+                    ->selectRaw('b.count - IFNULL(rr.count, 0) as result')
+                    ->where('b.id', 1)
+                    ->first();
+
+        return $result;
     }
 }
