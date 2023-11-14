@@ -39,11 +39,14 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="/admin" class="nav-link">
-                                {{ __('Admin panel') }}
-                            </a>
-                        </li>
+
+                        @if(Auth::user()->isAdmin)
+                            <li class="nav-item">
+                                <a href="/admin" class="nav-link">
+                                    {{ __('Admin panel') }}
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

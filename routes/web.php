@@ -21,12 +21,12 @@ use App\Http\Controllers\UserController;
 //Book Administration
 Route::prefix('admin')->group(function () {
     Route::controller(AdminBooksController::class)->group(function () {
-       Route::get('/', 'showBooks' );
-       Route::get('/addedit/{id}', 'addedit');
-       Route::post('/addedit', 'addedit');
-       Route::post('/delete', 'deleteBook');
+        Route::get('/', 'showBooks' )->middleware('administrator');
+        Route::get('/addedit/{id}', 'addedit')->middleware('administrator');
+        Route::post('/addedit', 'addedit')->middleware('administrator');
+        Route::post('/delete', 'deleteBook')->middleware('administrator');
     });
-})->middleware('auth');
+});
 
 //Books
 Route::get('/', [BooksController::class, 'showBooks'])->middleware('auth');
