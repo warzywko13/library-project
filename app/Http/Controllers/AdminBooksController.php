@@ -79,9 +79,9 @@ class AdminBooksController extends Controller
             if(empty($error)) {
                 $this->model->addUpdateBook($book);
 
-                $message['message'] = __('Dodano pomyślnie');
+                $message['success'] = __('Dodano pomyślnie');
                 if($params['id']) {
-                    $message['message'] = __('Zedytowano pomyślnie');
+                    $message['success'] = __('Zedytowano pomyślnie');
                 }
 
                 return redirect('/' . $this->prefix)->with($message);
@@ -109,7 +109,7 @@ class AdminBooksController extends Controller
             $result = $this->model->addUpdateBook($book);
         }
 
-        $message['message'] = __('Usunięto pomyślnie');
+        $message['success'] = __('Usunięto pomyślnie');
 
         return redirect('/' . $this->prefix)->with($message);
     }

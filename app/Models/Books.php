@@ -13,8 +13,6 @@ class Books extends Model
 
     final public function getBooks()
     {
-        // $sql = ""
-
         return DB::table('books')
             ->where('deleted', '0')
             ->get();
@@ -66,25 +64,38 @@ class Books extends Model
     {
         $from = $params['from'];
         $to = $params['to'];
+        $id = $params['id'];
 
-        $result = DB::table('books as b')
-                    ->leftJoin(DB::raw('(SELECT 
-                                            r.book_id,
-                                            COUNT(r.id) AS count 
-                                        FROM reservation r
-                                        WHERE 
-                                            user_id <> ? AND 
-                                            (
-                                                ? BETWEEN r.from AND r.to
-                                                OR
-                                                ? BETWEEN r.from AND r.to
-                                            )
-                                            AND r.deleted = 0
-                                        GROUP BY r.book_id) as rr'), [$user_id, $from, $to])
-                    ->selectRaw('b.count - IFNULL(rr.count, 0) as result')
-                    ->where('b.id', 1)
-                    ->first();
+        $result = DB::select("
+                        SELECT
+                            b.count - rr.count AS result
+                        FROM books b 
+                        LEFT JOIN (
+                            SELECT 
+                                r.book_id,
+                                COUNT(r.id) AS count 
+                            FROM reservation r
+                            WHERE user_id <> :user_id
+                            AND (
+                                (:from BETWEEN r.from AND r.to)
+                                OR
+                                (:to BETWEEN r.from AND r.to)
+                            ) AND r.deleted = 0
+                            GROUP BY r.book_id
+                        ) AS rr ON rr.book_id = b.id
+                        WHERE b.id = :id", 
+                ['user_id' => $user_id, 'from' => $from, 'to' => $to, 'id' => $id]
+            );
+    
+        // Access the result
+        $result = $result[0]->result;
 
+        return $result;
+    }
+
+    final public function countLibrary()
+    {
+        $result = DB::table('locations')->count();
         return $result;
     }
 }

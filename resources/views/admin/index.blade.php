@@ -2,14 +2,6 @@
 
 @section('content')
     <div class="container">
-        @if( session('message') )
-            <div>
-                <div class="alert alert-success" role="alert">
-                    {{ session('message') }}
-                </div>
-            </div>
-        @endif
-
         <div class="d-flex flex-row-reverse gap-2 mb-3">
             <form method="POST" action="/admin/addedit">
                 @csrf

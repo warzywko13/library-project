@@ -14,7 +14,7 @@ class BooksController extends Controller
     )
     {}
 
-    final public function showBooks()
+    final public function showBooks(Request $request)
     {
         $results = $this->model->getBooks();
         $books = $this->getImageForArray($results);
@@ -28,6 +28,11 @@ class BooksController extends Controller
             $result = $this->model->getBookById($id);
             $book = $this->getImageForObject($result);
 
+            $error = $request['error'];
+
+            // dd($error);
+
+
             return view('view', ['book' => $book]);
         }
 
@@ -39,16 +44,22 @@ class BooksController extends Controller
     {
         $params = $request->all();
         $user_id = $request->user()->id;
+        $id = $request['id'];
 
         // Czy książka ma wolne rezerwacje
         $isFree = $this->model->getBookReservation($user_id, $params);
-        if($isFree) {
 
-        }
-        // 
+        if(!$isFree) {
+            // Sprawdź najbliższą lokalizację biblioteki
+            $library = $this->model->countLibrary();
+            if($library) {
 
+            }
 
+            // Zarejestruj książkę
+            return redirect('/book/'.$id)->with(['error' => __('Brak utworzonych lokalizacji')]);
+        } 
 
-        dd($params);
+        return redirect('/book/'.$id)->with(['error' => __('Podany termin jest już zarezerwowany')]);
     }
 }
