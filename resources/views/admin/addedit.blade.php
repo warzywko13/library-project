@@ -11,7 +11,7 @@
 
             <div class="form-group">
                 <label for="name">{{__('Nazwa')}}</label>
-                <input required type="string" class="form-control" name="name" id="name" value="@isset($book['name']) {{ $book['name'] }} @endisset" />
+                <input required type="string" class="form-control" name="name" id="name" value="@isset($book['name']){{$book['name']}}@endisset" />
                 @isset($error['name'])
                     <p class="text-danger fw-bold">{{ $error['name'] }}</p>
                 @endisset
@@ -27,14 +27,14 @@
 
             <div class="form-group mt-2">
                 <label for="description">{{ __('Opis') }}</label>
-                <textarea required class="form-control" id="description" name="description" rows="3">@isset($book['description']) {{ $book['description'] }} @endisset</textarea>
+                <textarea required class="form-control" id="description" name="description" rows="3">@isset($book['description']){{$book['description']}}@endisset</textarea>
                 @isset($error['description'])
-                    <p class="text-danger fw-bold">{{ $error['description'] }}</p>
+                    <p class="text-danger fw-bold">{{$error['description']}}</p>
                 @endisset
             </div>
 
             <div class="form-group mt-2">
-                <label class="custom-file-label" for="image"> {{ __('Zdjęcie') }} </label>
+                <label class="custom-file-label" for="image">{{__('Zdjęcie')}}</label>
                 <div id="image">
                     @isset($book['data_image'])
                         <img class="mb-3" style="width: 15rem; height: 15rem;" src="data:image/jpeg;base64,{{$book['data_image']}}" />

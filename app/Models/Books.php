@@ -73,7 +73,7 @@ class Books extends Model
     {
         return DB::table('books')
             ->where('deleted', '0')
-            ->where('name', $name)
+            ->where('name', '=', $name)
             ->where('id', '<>', $id)
             ->count();
     }
