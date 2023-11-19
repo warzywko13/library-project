@@ -47,12 +47,14 @@ class LocationController extends Controller
         // dd($params);
 
         if(isset($params['submit'])) {
-            if(!$params['id']) {
+            if($params['id']) {
                 $location['id'] = $params['id'];
             }
             $location['name'] = $params['name'];
             $location['X'] = $params['x'];
             $location['Y'] = $params['y'];
+
+            // dd($location);
 
             $error = $this->validateLocation($params);
 
@@ -97,7 +99,7 @@ class LocationController extends Controller
 
         $message['success'] = __('Usunięto pomyślnie');
 
-        return redirect($this->prefix . '/locationlist')->with($message);
+        return redirect($this->prefix . '/location')->with($message);
     }
 
     final public function nearestLocation(int $x, int $y)

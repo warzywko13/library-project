@@ -5,7 +5,7 @@
         <div class="d-flex flex-row flex-row-reverse mb-3">
 
             <div class="d-flex flex-row gap-2">
-                <a href="/admin/addedit" class="btn btn-outline-primary">{{ __('Dodaj Nowy') }}</a>
+                <a href="/admin/book/addedit" class="btn btn-outline-primary">{{ __('Dodaj Nowy') }}</a>
             </div>
         </div>
 
@@ -27,12 +27,12 @@
                         <td>{{ $book->name }}</td>
                         <td>{{ $book->count }}</td>
                         <td>
-                            <a href="/admin/addedit/{{ $book->id }}" class="btn btn-outline-primary">
+                            <a href="/admin/book/addedit/{{ $book->id }}" class="btn btn-outline-primary">
                                 <i class="bi bi-pencil"></i>
                             </a>
                         </td>
                         <td>
-                            <form method="POST" action="/admin/delete" onsubmit="return confirm('{{ __('Czy na pewno chcesz usunąć?') }}')">
+                            <form method="POST" action="/admin/book/delete" onsubmit="return confirm('{{ __('Czy na pewno chcesz usunąć?') }}')">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $book->id }}" />
                                 <button type="submit" class="btn btn-outline-primary">

@@ -16,7 +16,7 @@ class UserController extends Controller
 
     final public function showSettings(Request $request)
     {
-        $save = $request->input('save');
+        $save = $request->input('submit');
 
         // dd($request->all());
 
@@ -27,7 +27,7 @@ class UserController extends Controller
             $params['y'] = $request->input('y');
 
             $this->model->updateUser($params);
-            return redirect('/');
+            return redirect('/settings')->with(['success' => __('Lokalizacja zmieniona pomyślnie')]);
         }
         
         $user = $this->model->getUser($user_id);       

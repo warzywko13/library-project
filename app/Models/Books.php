@@ -13,7 +13,7 @@ class Books extends Model
 
     final public function getBooks()
     {
-        $date = new DateTime();
+        $date = date("Y-m-d");
 
         $result = DB::select("
             SELECT
@@ -93,8 +93,7 @@ class Books extends Model
                                 r.book_id,
                                 COUNT(r.id) AS count 
                             FROM reservations r
-                            WHERE user_id <> :user_id
-                            AND (
+                            WHERE (
                                 (:from BETWEEN r.from AND r.to)
                                 OR
                                 (:to BETWEEN r.from AND r.to)
@@ -102,7 +101,7 @@ class Books extends Model
                             GROUP BY r.book_id
                         ) AS rr ON rr.book_id = b.id
                         WHERE b.deleted = 0 AND b.id = :id", 
-                ['user_id' => $user_id, 'from' => $from, 'to' => $to, 'id' => $id]
+                ['from' => $from, 'to' => $to, 'id' => $id]
             );
     
         // Access the result

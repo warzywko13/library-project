@@ -79,7 +79,7 @@ class AdminBooksController extends Controller
                     $message['success'] = __('Zedytowano pomyślnie');
                 }
 
-                return redirect('/' . $this->prefix . '/booklist')->with($message);
+                return redirect('/' . $this->prefix . '/book')->with($message);
             }
         } else {
             // Wczydaj dane do formularza
@@ -106,6 +106,6 @@ class AdminBooksController extends Controller
 
         $message['success'] = __('Usunięto pomyślnie');
 
-        return redirect('/' . $this->prefix . '/booklist')->with($message);
+        return redirect('/' . $this->prefix . '/book')->with($message);
     }
 }

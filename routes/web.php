@@ -23,7 +23,7 @@ use App\Http\Controllers\UserController;
 Route::prefix('admin')->group(function () {
     Route::controller(AdminBooksController::class)->group(function () {
         Route::get('/book', 'showBooks' )->middleware('administrator');
-        Route::get('/book/addedit/{id}', 'addedit')->middleware('administrator');
+        Route::match(array('GET', 'POST'), '/book/addedit/{id}', 'addedit')->middleware('administrator');
         Route::match(array('GET', 'POST'), '/book/addedit', 'addedit')->middleware('administrator');
         Route::post('/book/delete', 'deleteBook')->middleware('administrator');
     });
@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
     Route::controller(LocationController::class)->group(function () {
         Route::get('/location', 'showLocations')->middleware('administrator');
         Route::get('/location/addedit/{id}', 'editlocation')->middleware('administrator');
+        Route::post('/location/delete', 'deleteLocation')->middleware('administrator');
         Route::match(array('GET', 'POST'), '/location/addedit', 'editlocation')->middleware('administrator');
     });
 });

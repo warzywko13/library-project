@@ -6,11 +6,11 @@
 
         <form method="POST" action="/admin/location/addedit" enctype="multipart/form-data" novalidate>
             @csrf
-            <input name="id" type="hidden" value="@isset($location['id']) {{ $location['id'] }} @endisset" />
+            <input name="id" type="hidden" value="@isset($location['id']){{$location['id']}}@endisset" />
 
             <div class="form-group">
                 <label for="name">{{__('Nazwa')}}</label>
-                <input required type="string" class="form-control" name="name" id="name" value="@isset($location['name']) {{ $location['name'] }} @endisset" />
+                <input required type="string" class="form-control" name="name" id="name" value="@isset($location['name']){{$location['name']}}@endisset" />
                 @isset($error['name'])
                     <p class="text-danger fw-bold">{{ $error['name'] }}</p>
                 @endisset

@@ -5,7 +5,7 @@
 
         <h1 class="text-center fw-bold py-2">@isset($book['id']) {{ __('Edytuj książkę') }} @else {{ __('Dodaj książkę') }} @endisset</h1>
 
-        <form method="POST" action="/admin/addedit" enctype="multipart/form-data">
+        <form method="POST" action="/admin/book/addedit" enctype="multipart/form-data">
             @csrf
             <input name="id" type="hidden" value="@isset($book['id']) {{ $book['id'] }} @endisset" />
 

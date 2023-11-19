@@ -16,9 +16,9 @@
                         <label for="from" class="col-sm-2 col-form-label">{{ __('Od') }}</label>
                         <div class="col-sm-10">
                             <input required type="date" class="form-control" id="from" name="from" />
-                            @isset($error['from'])
+                            @isset($error_reservation['from'])
                                 <div class="text-danger fw-bold">
-                                   {{ $error['from'] }}
+                                   {{ $error_reservation['from'] }}
                                 </div>
                             @endisset
                         </div>
@@ -27,9 +27,9 @@
                         <label for="to" class="col-sm-2 col-form-label mt-2">{{ __('Do') }}</label>
                         <div class="col-sm-10">
                             <input required type="date" class="form-control mt-2" id="to" name="to" />
-                            @isset($error['to'])
+                            @isset($error_reservation['to'])
                                 <div class="text-danger fw-bold">
-                                    {{ $error['to'] }}
+                                    {{ $error_reservation['to'] }}
                                 </div>
                             @endisset
                         </div>
@@ -37,11 +37,11 @@
 
                         <button class="btn btn-lg btn-outline-primary d-block mx-auto mt-2">{{ __('Wypożycz') }}</button>
 
-                        @isset($error['form'])
+                        @isset($error_reservation['reservation'])
                             <div class="text-danger fw-bold">
-                                {{ $error['form'] }}
+                                {{ $error_reservation['reservation'] }}
                             </div>
-                        @endisset
+                         @endisset
                     </form>
                 </div>
             </div>

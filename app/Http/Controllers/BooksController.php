@@ -28,9 +28,6 @@ class BooksController extends Controller
     final public function showBooksAPI()
     {
         $results = $this->model->getBooks();
-
-        dd($results);
-
         $books = $this->getImageForArray($results);
 
         return response()->json($books);
@@ -44,14 +41,30 @@ class BooksController extends Controller
 
             $error = $request['error'];
 
-            // dd($error);
-
-
             return view('view', ['book' => $book]);
         }
 
 
         return redirect('/');
+    }
+
+    final public function validateAddBookReservation($params): ?string
+    {
+        if(empty($params['from'])) {
+            return __('Pole od nie może być puste');
+        }
+
+        if(empty($params['to'])) {
+            return __('Pole do nie może być puste');
+        }
+
+        if(isset($params['from']) && isset($params['to'])) {
+            if( $params['from'] > $params['to'] ) {
+                return __('Data do nie może być większa niż od');
+            }
+        }
+
+        return null;
     }
 
     final public function addBookReservation(Request $request)
@@ -62,6 +75,12 @@ class BooksController extends Controller
 
         // Czy książka ma wolne rezerwacje
         $isFree = $this->model->getBookReservation($user_id, $params);
+        
+        $error = $this->validateAddBookReservation($params);
+
+        if(!empty($error)) {
+            return redirect('/book/'.$id)->with(['error' => $error]);
+        }
 
         if($isFree) {
             // Czy istnieją biblioteki w systemie
