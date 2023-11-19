@@ -13,9 +13,27 @@ class Books extends Model
 
     final public function getBooks()
     {
-        return DB::table('books')
-            ->where('deleted', '0')
-            ->get();
+        $date = new DateTime();
+
+        $result = DB::select("
+            SELECT
+                b.*,
+                b.count - IFNULL(rr.count, 0) AS count_result
+            FROM books b 
+            LEFT JOIN (
+                SELECT 
+                    r.book_id,
+                    COUNT(r.id) AS count 
+                FROM reservations r
+                WHERE :date BETWEEN r.from AND r.to
+                AND r.deleted = 0
+                GROUP BY r.book_id
+            ) AS rr ON rr.book_id = b.id
+            WHERE b.deleted = 0", 
+            ['date' => $date]
+        );
+
+        return $result;
     }
 
     final public function getBookById(int $id)
@@ -68,13 +86,13 @@ class Books extends Model
 
         $result = DB::select("
                         SELECT
-                            b.count - rr.count AS result
+                            b.count - IFNULL(rr.count, 0) AS result
                         FROM books b 
                         LEFT JOIN (
                             SELECT 
                                 r.book_id,
                                 COUNT(r.id) AS count 
-                            FROM reservation r
+                            FROM reservations r
                             WHERE user_id <> :user_id
                             AND (
                                 (:from BETWEEN r.from AND r.to)
@@ -83,7 +101,7 @@ class Books extends Model
                             ) AND r.deleted = 0
                             GROUP BY r.book_id
                         ) AS rr ON rr.book_id = b.id
-                        WHERE b.id = :id", 
+                        WHERE b.deleted = 0 AND b.id = :id", 
                 ['user_id' => $user_id, 'from' => $from, 'to' => $to, 'id' => $id]
             );
     
@@ -97,5 +115,47 @@ class Books extends Model
     {
         $result = DB::table('locations')->count();
         return $result;
+    }
+
+    final public function getLocationById(int $id)
+    {
+        return (array) DB::table('locations')
+            ->where('deleted', '0')
+            ->where('id', $id)
+            ->first();
+    }
+
+    final public function addUpdateLocation(array $ob): bool|int
+    {
+        if(isset($ob['id'])) {
+            if(isset($ob['deleted'])) {
+                //delete
+                $ob['deleted_at'] = new DateTime();
+                $ob['deleted_by'] = auth()->user()->id;
+            } else {
+                //update
+                $ob['updated_at'] = new DateTime();
+                $ob['updated_by'] = auth()->user()->id;
+            }
+
+            return DB::table('locations')
+                ->where('id', $ob['id'])
+                ->update($ob);
+        }
+
+        //insert
+        $ob['created_at'] = new DateTime();
+        $ob['created_by'] = auth()->user()->id;
+        return DB::table('locations')
+            ->insert($ob);
+    }
+
+    final public function getLocationByNameAndId(string $name, int $id = null)
+    {
+        return DB::table('locations')
+            ->where('deleted', '0')
+            ->where('name', $name)
+            ->where('id', '<>', $id)
+            ->count();
     }
 }

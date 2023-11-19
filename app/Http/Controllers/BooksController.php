@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Images;
+use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Books;
 
@@ -10,6 +12,7 @@ class BooksController extends Controller
 {
     public function __construct(
         private $model = new Books(),
+        private $user = new User(),
         private $prefix = 'book'
     )
     {}
@@ -20,6 +23,17 @@ class BooksController extends Controller
         $books = $this->getImageForArray($results);
 
         return view('home', ['books' => $books]);
+    }
+
+    final public function showBooksAPI()
+    {
+        $results = $this->model->getBooks();
+
+        dd($results);
+
+        $books = $this->getImageForArray($results);
+
+        return response()->json($books);
     }
 
     final public function showBook(Request $request, int $id = null)
@@ -49,11 +63,30 @@ class BooksController extends Controller
         // Czy książka ma wolne rezerwacje
         $isFree = $this->model->getBookReservation($user_id, $params);
 
-        if(!$isFree) {
-            // Sprawdź najbliższą lokalizację biblioteki
+        if($isFree) {
+            // Czy istnieją biblioteki w systemie
             $library = $this->model->countLibrary();
-            if($library) {
 
+            if($library) {
+                // Sprawdź najbliższą lokalizację biblioteki
+                $user = $this->user->getUser($user_id);
+
+                $x = $user->X;
+                $y = $user->Y;
+
+                if($x && $y) {
+                    $loc = (new LocationController)->nearestLocation($x, $y);
+
+                    Reservation::create([
+                        'user_id' => $user_id,
+                        'book_id' => $id,
+                        'location_id' => $loc->id,
+                        'from' => $params['from'],
+                        'to' => $params['to']
+                    ]);
+
+                    return redirect('/')->with(['success' => __('Książka wypożyczona pomyślnie. Odbiór w ') . $loc->name]);
+                }
             }
 
             // Zarejestruj książkę

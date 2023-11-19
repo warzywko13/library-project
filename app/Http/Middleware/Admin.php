@@ -18,8 +18,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth()->user()->isAdmin == 1) {
-            return $next($request);
+        if( isset(Auth()->user()->id) ) {
+            if(Auth()->user()->isAdmin == 1) {
+                return $next($request);
+            }
         }
 
         abort(401);

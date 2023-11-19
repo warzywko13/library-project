@@ -16,7 +16,7 @@
             <input required type="number" class="form-control" id="y" name="y" value="{{ $p['y'] }}">
         </div>
 
-        <button type="submit" name="save" value="1" class="btn btn-outline-primary">{{ __('Zapisz') }}</button>
+        <button type="submit" name="submit" value="1" class="btn btn-outline-primary">{{ __('Zapisz') }}</button>
         <button type="button" class="btn btn-outline-secondary" id="getLocation">{{ __('Pobierz lokalizację') }}</button>
     </form>
 

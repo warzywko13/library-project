@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\AdminBooksController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ReservationsController;
 use App\Http\Controllers\UserController;
 
@@ -21,10 +22,16 @@ use App\Http\Controllers\UserController;
 //Book Administration
 Route::prefix('admin')->group(function () {
     Route::controller(AdminBooksController::class)->group(function () {
-        Route::get('/', 'showBooks' )->middleware('administrator');
-        Route::get('/addedit/{id}', 'addedit')->middleware('administrator');
-        Route::post('/addedit', 'addedit')->middleware('administrator');
-        Route::post('/delete', 'deleteBook')->middleware('administrator');
+        Route::get('/book', 'showBooks' )->middleware('administrator');
+        Route::get('/book/addedit/{id}', 'addedit')->middleware('administrator');
+        Route::match(array('GET', 'POST'), '/book/addedit', 'addedit')->middleware('administrator');
+        Route::post('/book/delete', 'deleteBook')->middleware('administrator');
+    });
+
+    Route::controller(LocationController::class)->group(function () {
+        Route::get('/location', 'showLocations')->middleware('administrator');
+        Route::get('/location/addedit/{id}', 'editlocation')->middleware('administrator');
+        Route::match(array('GET', 'POST'), '/location/addedit', 'editlocation')->middleware('administrator');
     });
 });
 
@@ -39,6 +46,10 @@ Route::controller(BooksController::class)->group(function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/settings', 'showSettings');
     Route::post('/settings', 'showSettings');
+})->middleware('auth');
+
+Route::controller(ReservationsController::class)->group(function () {
+    Route::get('/reservations', 'showReservations');;
 })->middleware('auth');
 
 Auth::routes();

@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longblob('data');
             $table->boolean('delete')->default(0);
             $table->timestamps();
         });
+
+        	
+        DB::statement("ALTER TABLE images ADD `data` MEDIUMBLOB");
     }
 
     /**

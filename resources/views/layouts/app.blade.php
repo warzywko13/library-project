@@ -26,28 +26,36 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link">
-                                {{ __('Start') }}
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                {{ __('My reservations') }}
-                            </a>
-                        </li>
-
-
-                        @if(isset(Auth::user()->isAdmin) && Auth::user()->isAdmin)
+                    @if(isset(Auth::user()->id))
+                        <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a href="/admin" class="nav-link">
-                                    {{ __('Admin panel') }}
+                                <a href="/" class="nav-link">
+                                    {{ __('Start') }}
                                 </a>
                             </li>
-                        @endif
-                    </ul>
+
+                            <li class="nav-item">
+                                <a href="/reservations" class="nav-link">
+                                    {{ __('My reservations') }}
+                                </a>
+                            </li>
+
+
+                            @if(isset(Auth::user()->isAdmin) && Auth::user()->isAdmin)
+                                <li class="nav-item">
+                                    <a href="/admin/book" class="nav-link">
+                                        {{ __('ADM Książki') }}
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="/admin/location" class="nav-link">
+                                        {{ __('ADM Lokalizacja') }}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

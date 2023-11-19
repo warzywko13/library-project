@@ -19,7 +19,7 @@ class AdminBooksController extends Controller
     final public function showBooks()
     {
         $books = $this->model->getBooks();
-        return view($this->prefix . '/index', ['books' => $books]);
+        return view($this->prefix . '/booklist', ['books' => $books]);
     }
 
     public function validateAdmin(array $params): array
@@ -47,11 +47,6 @@ class AdminBooksController extends Controller
     final public function addedit(Request $request, int $id = null)
     {
         $params = $request->all();
-
-        if($request->session()->token() != csrf_token()) {
-            return redirect('/');
-        }
-
         $error = [];
 
         // Jeśli zapisz/edytuj
@@ -84,7 +79,7 @@ class AdminBooksController extends Controller
                     $message['success'] = __('Zedytowano pomyślnie');
                 }
 
-                return redirect('/' . $this->prefix)->with($message);
+                return redirect('/' . $this->prefix . '/booklist')->with($message);
             }
         } else {
             // Wczydaj dane do formularza
@@ -111,6 +106,6 @@ class AdminBooksController extends Controller
 
         $message['success'] = __('Usunięto pomyślnie');
 
-        return redirect('/' . $this->prefix)->with($message);
+        return redirect('/' . $this->prefix . '/booklist')->with($message);
     }
 }
