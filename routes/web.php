@@ -50,7 +50,7 @@ Route::controller(UserController::class)->group(function () {
 })->middleware('auth');
 
 Route::controller(ReservationsController::class)->group(function () {
-    Route::get('/reservations', 'showReservations');;
+    Route::get('/reservations', 'showReservations');
 })->middleware('auth');
 
 Auth::routes();

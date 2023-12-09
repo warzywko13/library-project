@@ -112,7 +112,7 @@ class Books extends Model
 
     final public function countLibrary()
     {
-        $result = DB::table('locations')->count();
+        $result = DB::table('locations')->where('deleted', '=', '0')->count();
         return $result;
     }
 
